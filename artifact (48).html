@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>انجمن علمی رباتیک و هوش مصنوعی - دانشگاه تربیت دبیر شهید رجایی</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --dark-bg: #0f172a;
+            --darker-bg: #020617;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --text-light: #f8fafc;
+            --text-gray: #64748b;
+            --neon-blue: #00d4ff;
+            --neon-purple: #b794f6;
+            --gradient-primary: linear-gradient(135deg, #1e40af 0%, #8b5cf6 100%);
+            --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(30, 64, 175, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--secondary-blue);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-blue);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 80%;
+        }
+
+        .lang-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-nav {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(30, 64, 175, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--secondary-blue);
+            border: 2px solid var(--secondary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(2) { animation-delay: -2s; }
+        .floating-element:nth-child(3) { animation-delay: -4s; }
+
+        .floating-robot {
+            top: 20%;
+            right: 10%;
+            font-size: 4rem;
+            color: var(--accent-purple);
+            opacity: 0.7;
+        }
+
+        .floating-brain {
+            bottom: 30%;
+            left: 15%;
+            font-size: 3rem;
+            color: var(--accent-cyan);
+            opacity: 0.6;
+        }
+
+        .floating-gear {
+            top: 60%;
+            right: 20%;
+            font-size: 2rem;
+            color: var(--neon-blue);
+            opacity: 0.5;
+            animation: spin 8s linear infinite;
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: var(--secondary-blue);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .card-text {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-top: 10px;
+        }
+
+        /* Events Section */
+        .event-card {
+            display: flex;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateX(10px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.2);
+        }
+
+        .event-date {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+        }
+
+        .event-day {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .event-month {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .event-info {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .event-desc {
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .news-excerpt {
+            color: var(--text-gray);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .news-date {
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            background: rgba(30, 41, 59, 0.5);
+            color: var(--text-light);
+            font-family: 'Vazirmatn', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            border-color: var(--accent-cyan);
+            transform: translateX(10px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-secondary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--darker-bg);
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 50px 0 20px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .footer-section p, .footer-section li {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.4);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(59, 130, 246, 0.1);
+            color: var(--text-gray);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            margin: 20px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-light);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-top: 3px solid var(--secondary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .event-card {
+                flex-direction: column;
+            }
+
+            .event-date {
+                min-width: auto;
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 20px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-element {
+                display: none;
+            }
+        }
+
+        /* Language Toggle */
+        [dir="ltr"] {
+            font-family: 'Inter', sans-serif;
+        }
+
+        [dir="ltr"] .hero-title,
+        [dir="ltr"] .section-title {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Hidden sections for SPA behavior */
+        .section-hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body dir="rtl" id="body">
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showSection('home')">
+                <div class="logo-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <span id="logo-text">انجمن رباتیک و AI</span>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" onclick="showSection('home')" id="nav-home">خانه</a>
+                <a href="#" class="nav-link" onclick="showSection('about')" id="nav-about">درباره ما</a>
+                <a href="#" class="nav-link" onclick="showSection('events')" id="nav-events">رویدادها</a>
+                <a href="#" class="nav-link" onclick="showSection('news')" id="nav-news">اخبار</a>
+                <a href="#" class="nav-link" onclick="showSection('gallery')" id="nav-gallery">گالری</a>
+                <a href="#" class="nav-link" onclick="showSection('contact')" id="nav-contact">تماس</a>
+            </nav>
+
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="lang-toggle" onclick="toggleLanguage()" id="lang-btn">EN</button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars" id="mobile-menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-menu" id="mobile-menu">
+            <nav class="mobile-nav">
+                <a href="#" class="nav-link" onclick="showSection('home'); closeMobileMenu()" id="mobile-nav-home">خانه</a>
+                <a href="#" class="nav-link" onclick="showSection('about'); closeMobileMenu()" id="mobile-nav-about">درباره ما</a>
+                <a href="#" class="nav-link" onclick="showSection('events'); closeMobileMenu()" id="mobile-nav-events">رویدادها</a>
+                <a href="#" class="nav-link" onclick="showSection('news'); closeMobileMenu()" id="mobile-nav-news">اخبار</a>
+                <a href="#" class="nav-link" onclick="showSection('gallery'); closeMobileMenu()" id="mobile-nav-gallery">گالری</a>
+                <a href="#" class="nav-link" onclick="showSection('contact'); closeMobileMenu()" id="mobile-nav-contact">تماس</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home-section" class="section">
+            <div class="hero">
+                <div class="floating-element floating-robot">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="floating-element floating-brain">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="floating-element floating-gear">
+                    <i class="fas fa-cog"></i>
+                </div>
+
+                <div class="hero-content">
+                    <h1 class="hero-title" id="hero-title">انجمن علمی رباتیک و هوش مصنوعی</h1>
+                    <p class="hero-subtitle" id="hero-subtitle">دانشگاه تربیت دبیر شهید رجایی - پیشگام در آموزش و پژوهش فناوری‌های نوین</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="openModal('register-modal')" id="join-btn">
+                            <i class="fas fa-user-plus"></i>
+                            عضویت در انجمن
+                        </button>
+                        <button class="btn btn-secondary" onclick="showSection('about')" id="learn-btn">
+                            <i class="fas fa-info-circle"></i>
+                            بیشتر بدانید
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" id="members-count">250+</span>
+                    <span class="stat-label" id="members-label">عضو فعال</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="events-count">45+</span>
+                    <span class="stat-label" id="events-label">رویداد برگزار شده</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="projects-count">30+</span>
+                    <span class="stat-label" id="projects-label">پروژه انجام شده</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="awards-count">15+</span>
+                    <span class="stat-label" id="awards-label">جایزه کسب شده</span>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="card-title" id="robotics-title">رباتیک پیشرفته</h3>
+                    <p class="card-text" id="robotics-text">آموزش و توسعه ربات‌های هوشمند با استفاده از تکنولوژی‌های روز دنیا</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="card-title" id="ai-title">هوش مصنوعی</h3>
+                    <p class="card-text" id="ai-text">پیاده‌سازی الگوریتم‌های یادگیری ماشین و شبکه‌های عصبی</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="card-title" id="programming-title">برنامه‌نویسی</h3>
+                    <p class="card-text" id="programming-text">آموزش زبان‌های برنامه‌نویسی مخصوص رباتیک و هوش مصنوعی</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section" class="section section-hidden">
+            <h2 class="section-title" id="about-title">درباره انجمن</h2>
+            <p class="section-subtitle" id="about-subtitle">انجمن علمی رباتیک و هوش مصنوعی دانشگاه تربیت دبیر شهید رجایی</p>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="card-title" id="mission-title">ماموریت ما</h3>
+                    <p class="card-text" id="mission-text">ترویج و توسعه دانش رباتیک و هوش مصنوعی در میان دانشجویان و ایجاد پلی میان دانشگاه و صنعت</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="card-title" id="vision-title">چشم‌انداز</h3>
+                    <p class="card-text" id="vision-text">تبدیل شدن به پیشگام در زمینه آموزش و پژوهش تکنولوژی‌های نوین در منطقه</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="card-title" id="team-title">تیم ما</h3>
+                    <p class="card-text" id="team-text">گروهی از دانشجویان و اساتید مستعد و علاقه‌مند به فناوری‌های نوین</p>
+                </div>
+            </div>
+
+            <div class="cards-grid" style="margin-top: 50px;">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="card-title" id="achievements-title">دستاوردها</h3>
+                    <p class="card-text" id="achievements-text">برندگان متعدد مسابقات ملی و بین‌المللی رباتیک و هوش مصنوعی</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="card-title" id="cooperation-title">همکاری‌ها</h3>
+                    <p class="card-text" id="cooperation-text">همکاری نزدیک با شرکت‌های دانش‌بنیان و مراکز تحقیقاتی معتبر</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="card-title" id="education-title">آموزش</h3>
+                    <p class="card-text" id="education-text">برگزاری دوره‌های آموزشی تخصصی و کارگاه‌های عملی</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events-section" class="section section-hidden">
+            <h2 class="section-title" id="events-title">رویدادهای پیش رو</h2>
+            <p class="section-subtitle" id="events-subtitle">در رویدادهای هیجان‌انگیز ما شرکت کنید</p>
+
+            <div id="events-list">
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">15</span>
+                        <span class="event-month" id="event-month-1">مهر</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title" id="event-title-1">کارگاه برنامه‌نویسی ربات</h3>
+                        <p class="event-desc" id="event-desc-1">آموزش عملی برنامه‌نویسی و کنترل ربات‌های خودکار</p>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> <span id="event-time-1">9:00 - 17:00</span></span>
+                            <span><i class="fas fa-map-marker-alt"></i> <span id="event-location-1">آزمایشگاه رباتیک</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">22</span>
+                        <span class="event-month" id="event-month-2">مهر</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title" id="event-title-2">سمینار هوش مصنوعی</h3>
+                        <p class="event-desc" id="event-desc-2">بررسی آخرین تحولات در زمینه یادگیری عمیق</p>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> <span id="event-time-2">14:00 - 16:00</span></span>
+                            <span><i class="fas fa-map-marker-alt"></i> <span id="event-location-2">آمفی تئاتر مرکزی</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="event-day">30</span>
+                        <span class="event-month" id="event-month-3">مهر</span>
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title" id="event-title-3">مسابقه رباتیک</h3>
+                        <p class="event-desc" id="event-desc-3">رقابت هیجان‌انگیز ربات‌های طراحی شده توسط دانشجویان</p>
+                        <div class="event-meta">
+                            <span><i class="fas fa-clock"></i> <span id="event-time-3">10:00 - 18:00</span></span>
+                            <span><i class="fas fa-map-marker-alt"></i> <span id="event-location-3">سالن ورزشی</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn btn-primary" onclick="openModal('event-register-modal')" id="register-event-btn">
+                    <i class="fas fa-calendar-plus"></i>
+                    ثبت‌نام در رویداد
+                </button>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news-section" class="section section-hidden">
+            <h2 class="section-title" id="news-title">آخرین اخبار</h2>
+            <p class="section-subtitle" id="news-subtitle">از آخرین فعالیت‌ها و دستاوردهای انجمن مطلع شوید</p>
+
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title" id="news-title-1">کسب مقام اول در مسابقه ملی</h3>
+                        <p class="news-excerpt" id="news-excerpt-1">تیم رباتیک دانشگاه موفق به کسب مقام اول در مسابقات ملی رباتیک شد...</p>
+                        <span class="news-date" id="news-date-1">5 مهر 1403</span>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title" id="news-title-2">افتتاح آزمایشگاه جدید</h3>
+                        <p class="news-excerpt" id="news-excerpt-2">آزمایشگاه هوش مصنوعی با امکانات پیشرفته افتتاح شد...</p>
+                        <span class="news-date" id="news-date-2">28 شهریور 1403</span>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title" id="news-title-3">سمینار بین‌المللی</h3>
+                        <p class="news-excerpt" id="news-excerpt-3">برگزاری سمینار بین‌المللی هوش مصنوعی با حضور اساتید مطرح...</p>
+                        <span class="news-date" id="news-date-3">20 شهریور 1403</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery-section" class="section section-hidden">
+            <h2 class="section-title" id="gallery-title">گالری تصاویر</h2>
+            <p class="section-subtitle" id="gallery-subtitle">نگاهی به فعالیت‌ها و دستاوردهای انجمن</p>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="news-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="card-content" style="padding: 20px;">
+                        <h3 class="card-title" id="gallery-item-1">ربات‌های طراحی شده</h3>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="news-image">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="card-content" style="padding: 20px;">
+                        <h3 class="card-title" id="gallery-item-2">کارگاه‌های برنامه‌نویسی</h3>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="news-image">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="card-content" style="padding: 20px;">
+                        <h3 class="card-title" id="gallery-item-3">مسابقات و جوایز</h3>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="news-image">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="card-content" style="padding: 20px;">
+                        <h3 class="card-title" id="gallery-item-4">فارغ‌التحصیلان</h3>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="news-image">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="card-content" style="padding: 20px;">
+                        <h3 class="card-title" id="gallery-item-5">همکاری‌های صنعتی</h3>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="news-image">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div class="card-content" style="padding: 20px;">
+                        <h3 class="card-title" id="gallery-item-6">پروژه‌های تحقیقاتی</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact-section" class="section section-hidden">
+            <h2 class="section-title" id="contact-title">تماس با ما</h2>
+            <p class="section-subtitle" id="contact-subtitle">با ما در ارتباط باشید</p>
+
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <h3 class="modal-title" id="contact-form-title">ارسال پیام</h3>
+                    <form id="contact-form-element">
+                        <div class="form-group">
+                            <label class="form-label" id="name-label" for="name">نام و نام خانوادگی</label>
+                            <input type="text" class="form-input" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" id="email-label" for="email">ایمیل</label>
+                            <input type="email" class="form-input" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" id="subject-label" for="subject">موضوع</label>
+                            <input type="text" class="form-input" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" id="message-label" for="message">پیام</label>
+                            <textarea class="form-textarea" id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" id="send-message-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            ارسال پیام
+                        </button>
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4 id="address-title">آدرس</h4>
+                            <p id="address-text">تهران، لویزان، دانشگاه تربیت دبیر شهید رجایی</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 id="phone-title">تلفن</h4>
+                            <p id="phone-text">021-22970060</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4 id="email-title">ایمیل</h4>
+                            <p id="email-text">robotics@sru.ac.ir</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 id="hours-title">ساعات کاری</h4>
+                            <p id="hours-text">شنبه تا چهارشنبه: 8:00 - 16:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 id="footer-about-title">درباره انجمن</h3>
+                <p id="footer-about-text">انجمن علمی رباتیک و هوش مصنوعی دانشگاه تربیت دبیر شهید رجایی با هدف ترویج و توسعه دانش در این حوزه‌های نوآورانه تأسیس شده است.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="اینستاگرام">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" title="تلگرام">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="social-link" title="لینکدین">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link" title="یوتیوب">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 id="footer-links-title">لینک‌های مفید</h3>
+                <ul>
+                    <li><a href="#" onclick="showSection('about')" id="footer-link-about">درباره ما</a></li>
+                    <li><a href="#" onclick="showSection('events')" id="footer-link-events">رویدادها</a></li>
+                    <li><a href="#" onclick="showSection('news')" id="footer-link-news">اخبار</a></li>
+                    <li><a href="#" onclick="showSection('gallery')" id="footer-link-gallery">گالری</a></li>
+                    <li><a href="#" onclick="showSection('contact')" id="footer-link-contact">تماس با ما</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 id="footer-services-title">خدمات</h3>
+                <ul>
+                    <li><a href="#" id="footer-service-1">کارگاه‌های آموزشی</a></li>
+                    <li><a href="#" id="footer-service-2">مشاوره پروژه</a></li>
+                    <li><a href="#" id="footer-service-3">همکاری صنعتی</a></li>
+                    <li><a href="#" id="footer-service-4">پژوهش و توسعه</a></li>
+                    <li><a href="#" id="footer-service-5">مسابقات علمی</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 id="footer-contact-title">اطلاعات تماس</h3>
+                <p><i class="fas fa-map-marker-alt"></i> <span id="footer-address">تهران، لویزان، دانشگاه تربیت دبیر شهید رجایی</span></p>
+                <p><i class="fas fa-phone"></i> <span id="footer-phone">021-22970060</span></p>
+                <p><i class="fas fa-envelope"></i> <span id="footer-email">robotics@sru.ac.ir</span></p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p id="footer-copyright">© 1403 انجمن علمی رباتیک و هوش مصنوعی - دانشگاه تربیت دبیر شهید رجایی. تمامی حقوق محفوظ است.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Registration Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('register-modal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title" id="register-modal-title">عضویت در انجمن</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label class="form-label" id="register-name-label" for="register-name">نام و نام خانوادگی</label>
+                    <input type="text" class="form-input" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" id="register-student-id-label" for="register-student-id">شماره دانشجویی</label>
+                    <input type="text" class="form-input" id="register-student-id" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" id="register-email-label" for="register-email">ایمیل</label>
+                    <input type="email" class="form-input" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" id="register-phone-label" for="register-phone">شماره تماس</label>
+                    <input type="tel" class="form-input" id="register-phone" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" id="register-major-label" for="register-major">رشته تحصیلی</label>
+                    <input type="text" class="form-input" id="register-major" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" id="register-submit-btn">
+                    <i class="fas fa-user-plus"></i>
+                    ثبت‌نام
+                </button>
+            </form>
+            <div class="loading" id="register-loading"></div>
+        </div>
+    </div>
+
+    <!-- Event Registration Modal -->
+    <div class="modal" id="event-register-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('event-register-modal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title" id="event-register-modal-title">ثبت‌نام در رویداد</h2>
+            <form id="event-register-form">
+                <div class="form-group">
+                    <label class="form-label" id="event-select-label" for="event-select">انتخاب رویداد</label>
+                    <select class="form-input" id="event-select" required>
+                        <option value="" id="event-option-default">رویداد مورد نظر را انتخاب کنید</option>
+                        <option value="workshop" id="event-option-1">کارگاه برنامه‌نویسی ربات</option>
+                        <option value="seminar" id="event-option-2">سمینار هوش مصنوعی</option>
+                        <option value="competition" id="event-option-3">مسابقه رباتیک</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" id="event-register-name-label" for="event-register-name">نام و نام خانوادگی</label>
+                    <input type="text" class="form-input" id="event-register-name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" id="event-register-student-id-label" for="event-register-student-id">شماره دانشجویی</label>
+                    <input type="text" class="form-input" id="event-register-student-id" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" id="event-register-email-label" for="event-register-email">ایمیل</label>
+                    <input type="email" class="form-input" id="event-register-email" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" id="event-register-submit-btn">
+                    <i class="fas fa-calendar-plus"></i>
+                    ثبت‌نام در رویداد
+                </button>
+            </form>
+            <div class="loading" id="event-register-loading"></div>
+        </div>
+    </div>
+
+    <script>
+        // Language translations
+        const translations = {
+            fa: {
+                'logo-text': 'انجمن رباتیک و AI',
+                'nav-home': 'خانه',
+                'nav-about': 'درباره ما',
+                'nav-events': 'رویدادها',
+                'nav-news': 'اخبار',
+                'nav-gallery': 'گالری',
+                'nav-contact': 'تماس',
+                'mobile-nav-home': 'خانه',
+                'mobile-nav-about': 'درباره ما',
+                'mobile-nav-events': 'رویدادها',
+                'mobile-nav-news': 'اخبار',
+                'mobile-nav-gallery': 'گالری',
+                'mobile-nav-contact': 'تماس',
+                'hero-title': 'انجمن علمی رباتیک و هوش مصنوعی',
+                'hero-subtitle': 'دانشگاه تربیت دبیر شهید رجایی - پیشگام در آموزش و پژوهش فناوری‌های نوین',
+                'join-btn': 'عضویت در انجمن',
+                'learn-btn': 'بیشتر بدانید',
+                'members-count': '250+',
+                'members-label': 'عضو فعال',
+                'events-count': '45+',
+                'events-label': 'رویداد برگزار شده',
+                'projects-count': '30+',
+                'projects-label': 'پروژه انجام شده',
+                'awards-count': '15+',
+                'awards-label': 'جایزه کسب شده',
+                'robotics-title': 'رباتیک پیشرفته',
+                'robotics-text': 'آموزش و توسعه ربات‌های هوشمند با استفاده از تکنولوژی‌های روز دنیا',
+                'ai-title': 'هوش مصنوعی',
+                'ai-text': 'پیاده‌سازی الگوریتم‌های یادگیری ماشین و شبکه‌های عصبی',
+                'programming-title': 'برنامه‌نویسی',
+                'programming-text': 'آموزش زبان‌های برنامه‌نویسی مخصوص رباتیک و هوش مصنوعی',
+                'about-title': 'درباره انجمن',
+                'about-subtitle': 'انجمن علمی رباتیک و هوش مصنوعی دانشگاه تربیت دبیر شهید رجایی',
+                'mission-title': 'ماموریت ما',
+                'mission-text': 'ترویج و توسعه دانش رباتیک و هوش مصنوعی در میان دانشجویان و ایجاد پلی میان دانشگاه و صنعت',
+                'vision-title': 'چشم‌انداز',
+                'vision-text': 'تبدیل شدن به پیشگام در زمینه آموزش و پژوهش تکنولوژی‌های نوین در منطقه',
+                'team-title': 'تیم ما',
+                'team-text': 'گروهی از دانشجویان و اساتید مستعد و علاقه‌مند به فناوری‌های نوین',
+                'achievements-title': 'دستاوردها',
+                'achievements-text': 'برندگان متعدد مسابقات ملی و بین‌المللی رباتیک و هوش مصنوعی',
+                'cooperation-title': 'همکاری‌ها',
+                'cooperation-text': 'همکاری نزدیک با شرکت‌های دانش‌بنیان و مراکز تحقیقاتی معتبر',
+                'education-title': 'آموزش',
+                'education-text': 'برگزاری دوره‌های آموزشی تخصصی و کارگاه‌های عملی',
+                'events-title': 'رویدادهای پیش رو',
+                'events-subtitle': 'در رویدادهای هیجان‌انگیز ما شرکت کنید',
+                'register-event-btn': 'ثبت‌نام در رویداد',
+                'news-title': 'آخرین اخبار',
+                'news-subtitle': 'از آخرین فعالیت‌ها و دستاوردهای انجمن مطلع شوید',
+                'gallery-title': 'گالری تصاویر',
+                'gallery-subtitle': 'نگاهی به فعالیت‌ها و دستاوردهای انجمن',
+                'contact-title': 'تماس با ما',
+                'contact-subtitle': 'با ما در ارتباط باشید',
+                'contact-form-title': 'ارسال پیام',
+                'name-label': 'نام و نام خانوادگی',
+                'email-label': 'ایمیل',
+                'subject-label': 'موضوع',
+                'message-label': 'پیام',
+                'send-message-btn': 'ارسال پیام',
+                'address-title': 'آدرس',
+                'address-text': 'تهران، لویزان، دانشگاه تربیت دبیر شهید رجایی',
+                'phone-title': 'تلفن',
+                'phone-text': '021-22970060',
+                'email-title': 'ایمیل',
+                'email-text': 'robotics@sru.ac.ir',
+                'hours-title': 'ساعات کاری',
+                'hours-text': 'شنبه تا چهارشنبه: 8:00 - 16:00'
+            },
+            en: {
+                'logo-text': 'Robotics & AI Society',
+                'nav-home': 'Home',
+                'nav-about': 'About',
+                'nav-events': 'Events',
+                'nav-news': 'News',
+                'nav-gallery': 'Gallery',
+                'nav-contact': 'Contact',
+                'mobile-nav-home': 'Home',
+                'mobile-nav-about': 'About',
+                'mobile-nav-events': 'Events',
+                'mobile-nav-news': 'News',
+                'mobile-nav-gallery': 'Gallery',
+                'mobile-nav-contact': 'Contact',
+                'hero-title': 'Robotics and AI Scientific Society',
+                'hero-subtitle': 'Shahid Rajaee Teacher Training University - Pioneer in Modern Technology Education & Research',
+                'join-btn': 'Join Society',
+                'learn-btn': 'Learn More',
+                'members-count': '250+',
+                'members-label': 'Active Members',
+                'events-count': '45+',
+                'events-label': 'Events Held',
+                'projects-count': '30+',
+                'projects-label': 'Completed Projects',
+                'awards-count': '15+',
+                'awards-label': 'Awards Won',
+                'robotics-title': 'Advanced Robotics',
+                'robotics-text': 'Training and development of intelligent robots using cutting-edge technology',
+                'ai-title': 'Artificial Intelligence',
+                'ai-text': 'Implementation of machine learning algorithms and neural networks',
+                'programming-title': 'Programming',
+                'programming-text': 'Teaching programming languages specific to robotics and AI',
+                'about-title': 'About Society',
+                'about-subtitle': 'Robotics and AI Scientific Society - Shahid Rajaee Teacher Training University',
+                'mission-title': 'Our Mission',
+                'mission-text': 'Promoting and developing robotics and AI knowledge among students and creating a bridge between university and industry',
+                'vision-title': 'Vision',
+                'vision-text': 'Becoming a pioneer in modern technology education and research in the region',
+                'team-title': 'Our Team',
+                'team-text': 'A group of talented students and professors interested in modern technologies',
+                'achievements-title': 'Achievements',
+                'achievements-text': 'Multiple winners of national and international robotics and AI competitions',
+                'cooperation-title': 'Collaborations',
+                'cooperation-text': 'Close cooperation with knowledge-based companies and reputable research centers',
+                'education-title': 'Education',
+                'education-text': 'Organizing specialized training courses and practical workshops',
+                'events-title': 'Upcoming Events',
+                'events-subtitle': 'Join our exciting events',
+                'register-event-btn': 'Register for Event',
+                'news-title': 'Latest News',
+                'news-subtitle': 'Stay updated with our latest activities and achievements',
+                'gallery-title': 'Photo Gallery',
+                'gallery-subtitle': 'A look at the society\'s activities and achievements',
+                'contact-title': 'Contact Us',
+                'contact-subtitle': 'Get in touch with us',
+                'contact-form-title': 'Send Message',
+                'name-label': 'Full Name',
+                'email-label': 'Email',
+                'subject-label': 'Subject',
+                'message-label': 'Message',
+                'send-message-btn': 'Send Message',
+                'address-title': 'Address',
+                'address-text': 'Tehran, Lavizan, Shahid Rajaee Teacher Training University',
+                'phone-title': 'Phone',
+                'phone-text': '021-22970060',
+                'email-title': 'Email',
+                'email-text': 'robotics@sru.ac.ir',
+                'hours-title': 'Working Hours',
+                'hours-text': 'Saturday to Wednesday: 8:00 - 16:00'
+            }
+        };
+
+        let currentLanguage = 'fa';
+        let mobileMenuOpen = false;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('home');
+            updateNavActiveState('home');
+        });
+
+        // Section navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('section-hidden');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.classList.remove('section-hidden');
+            }
+
+            // Update navigation active state
+            updateNavActiveState(sectionName);
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateNavActiveState(activeSection) {
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Add active class to current section link
+            const currentNavLink = document.querySelector(`[onclick="showSection('${activeSection}')"]`);
+            if (currentNavLink) {
+                currentNavLink.classList.add('active');
+            }
+        }
+
+        // Mobile menu
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('mobile-menu-icon');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                mobileMenu.classList.add('active');
+                menuIcon.className = 'fas fa-times';
+            } else {
+                mobileMenu.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('mobile-menu-icon');
+            
+            mobileMenuOpen = false;
+            mobileMenu.classList.remove('active');
+            menuIcon.className = 'fas fa-bars';
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Language toggle
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'fa' ? 'en' : 'fa';
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const langBtn = document.getElementById('lang-btn');
+            const body = document.getElementById('body');
+            
+            if (currentLanguage === 'en') {
+                body.setAttribute('dir', 'ltr');
+                langBtn.textContent = 'فا';
+            } else {
+                body.setAttribute('dir', 'rtl');
+                langBtn.textContent = 'EN';
+            }
+
+            // Update all text content
+            Object.keys(translations[currentLanguage]).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[currentLanguage][key];
+                    } else {
+                        element.textContent = translations[currentLanguage][key];
+                    }
+                }
+            });
+        }
+
+        // Form submissions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contact form
+            document.getElementById('contact-form-element').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showLoading('contact-loading');
+                
+                setTimeout(() => {
+                    hideLoading('contact-loading');
+                    alert(currentLanguage === 'fa' ? 'پیام شما با موفقیت ارسال شد!' : 'Your message has been sent successfully!');
+                    this.reset();
+                }, 2000);
+            });
+
+            // Registration form
+            document.getElementById('register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showLoading('register-loading');
+                
+                setTimeout(() => {
+                    hideLoading('register-loading');
+                    alert(currentLanguage === 'fa' ? 'ثبت‌نام شما با موفقیت انجام شد!' : 'Registration completed successfully!');
+                    closeModal('register-modal');
+                    this.reset();
+                }, 2000);
+            });
+
+            // Event registration form
+            document.getElementById('event-register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showLoading('event-register-loading');
+                
+                setTimeout(() => {
+                    hideLoading('event-register-loading');
+                    alert(currentLanguage === 'fa' ? 'ثبت‌نام در رویداد با موفقیت انجام شد!' : 'Event registration completed successfully!');
+                    closeModal('event-register-modal');
+                    this.reset();
+                }, 2000);
+            });
+        });
+
+        function showLoading(loadingId) {
+            document.getElementById(loadingId).style.display = 'block';
+        }
+
+        function hideLoading(loadingId) {
+            document.getElementById(loadingId).style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(15, 23, 42, 0.98)';
+            } else {
+                header.style.background = 'rgba(15, 23, 42, 0.95)';
+            }
+        });
+
+        // Add animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.card, .event-card, .news-card, .stat-card');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Run once on load
+    </script>
+</body>
+</html>
